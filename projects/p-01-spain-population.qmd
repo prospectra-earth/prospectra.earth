@@ -1,95 +1,95 @@
 ---
 title: "Where does Spain actually live?"
-subtitle: "Population density per H3 cell, cross-checked against night-lights."
-description: "Binning Spain's INE Padrón population into H3 res-9 cells and validating it against NASA Black Marble night-lights — the first project in Prospectra's demographic trilogy."
-date: 2026-05-26
+subtitle: "Population density across Spain — by municipality, province, autonomous community, and a uniform H3 grid."
+description: "Phase A of Prospectra's demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie."
+date: 2026-06-06
 author: "Prospectra"
-categories: [H3, INE, raster, Spain]
+categories: [H3, INE, Spain, density]
 toc: true
 ---
 
 ::: {.callout-note}
-## In progress — ships May 26, 2026
-This is the build page for **P-01**, the first project in Prospectra's demographic trilogy.
-It's published as the work happens. The code and figure below show the *approach*; the
-finished analysis and charts land on May 26.
+## Phase A — administrative + H3 view
+This is the first of two phases. **Phase A** (here) answers *where people live* from the census
+and the map. **Phase B** adds NASA Black Marble night-lights to validate *where inside each
+municipality* they actually live. Built and run on Databricks Free Edition serverless.
 :::
 
 ## The question
 
 Spain's population register, the [INE Padrón Continuo](https://ine.es), is published per
-*municipality* — and municipalities are wildly uneven in size. Madrid is one polygon; so is
-a 12-person hamlet in Soria. Ask "where do people actually live?" with that data and the map
-lies: it tells you about administrative borders, not density.
+*municipality* — and municipalities are wildly uneven in size. Madrid is one polygon; so is a
+12-person hamlet in Soria. Ask "where do people actually live?" with raw municipal data and the
+map lies: it tells you about administrative borders, not about people.
 
-The fix is to throw away the borders and bin everyone into a regular grid — [Uber's **H3**
-hexagons](https://h3geo.org) — then sanity-check the result against an independent signal:
-how brightly each cell glows at night.
+## The finding
 
-## The data
+The lie is measurable. Take every Spanish municipality's population density (people per km²,
+computed on an equal-area projection) for 2022:
 
-| Layer        | Source                       | Resolution        |
-|--------------|------------------------------|-------------------|
-| Population   | INE Padrón Continuo          | Municipal polygon |
-| Spatial index| Uber H3                      | res-9 (~0.1 km²)  |
-| Validation   | NASA Black Marble (VIIRS)    | ~500 m raster     |
+| Measure | people / km² |
+|---|---|
+| Median municipality | **13** |
+| Mean municipality | 180 |
+| **The average *person's* density** (population-weighted) | **2,508** |
 
-## Approach
+Half of Spain's municipalities sit below **13 people/km²** — the empty interior, *la España
+vaciada*. Yet the typical Spaniard lives at roughly **2,500 people/km²**. That's a **14×** gap
+between the average *place* and the average *person*. A map coloured by municipality shows you
+empty land; it does not show you where the country lives.
 
-1. **Bin** municipal population into H3 res-9 cells (area-weighted).
-2. **Aggregate** night-time radiance per cell from the Black Marble raster.
-3. **Compare** the two surfaces — where they disagree is where the register and reality part ways.
+## Four views of the same 47.5 million people
 
-### 1 · Binning population to H3
+The same population, drawn at four different units. Watch how the story sharpens as the spatial
+unit gets more honest.
 
-On Databricks, with Apache Sedona for the spatial join and the built-in `h3_*` SQL functions
-for indexing — no GIS server, just the lakehouse:
+### By municipality (~8,100 units)
+![Population density by municipality, 2022](../assets/p01/municipal_density_2022.png)
 
-```python
-# Databricks · PySpark + Apache Sedona
-from sedona.spark import SedonaContext
+### By province (50 units)
+![Population density by province, 2022](../assets/p01/provincial_density_2022.png)
 
-sedona = SedonaContext.create(spark)
+### By autonomous community (17 units)
+![Population density by autonomous community, 2022](../assets/p01/ccaa_density_2022.png)
 
-# municipal polygons (INE) → H3 res-9 cells covering each one
-cells = (
-    spark.table("ine.padron_municipal")
-         .selectExpr(
-             "muni_code",
-             "poblacion",
-             "explode(h3_polyfill(geom, 9)) AS h3")        # one row per covered cell
-)
+### On a uniform H3 grid (equal-area hexagons)
+The administrative units all share one flaw: they vary in size and shape, so colour partly
+encodes *geography* rather than *density*. Uber [H3](https://h3geo.org) replaces them with
+equal-area hexagons, so colour means one thing everywhere — and the population map and the
+density map become the same map.
 
-# split each municipality's population across its cells, weighted by area
-pop_per_cell = (
-    cells.withColumn("cell_pop", col("poblacion") * col("area_share"))
-         .groupBy("h3")
-         .agg(sum("cell_pop").alias("population"))
-)
-```
+![Population density on an H3 grid (res-6), 2022](../assets/p01/h3_density_res6_2022.png)
 
-### 2 · Cross-checking against night-lights
+## How it's built
 
-Zonal statistics straight in Databricks SQL — average VIIRS radiance per H3 cell:
+A lakehouse pipeline — no GIS server, just Databricks SQL + the native spatial functions:
+
+1. **Join** INE Padrón population to IGN municipal boundaries on the 5-digit INE code
+   (8,131 municipalities matched cleanly; the boundary set's extras are non-municipal
+   territorial entities and disputed enclaves, reconciled to the unit).
+2. **Density**, honestly — reproject to the ETRS89 / LAEA equal-area CRS (EPSG:3035) and divide
+   population by real km². Density is non-additive, so it's recomputed (not averaged) at each
+   level when dissolving up to province and CCAA.
+3. **H3 allocation** — polyfill each municipality to res-9 cells and distribute its population
+   across them, then roll up to res-6 for the national view. Population conserves to 99.998%.
 
 ```sql
-SELECT  h3_cell,
-        AVG(radiance) AS mean_radiance
-FROM    black_marble.viirs_2024
-GROUP BY h3_cell
+-- Allocate municipal population to H3 cells (native Databricks h3_*),
+-- simplifying geometry first so the polyfill stays cheap on detailed boundaries.
+SELECT  h3_toparent(cell, 6)                         AS h3_cell,
+        SUM(poblacion / num_cells)                   AS poblacion
+FROM (
+  SELECT  codigo_municipio, poblacion,
+          explode(h3_polyfillash3string(ST_AsWKT(ST_Simplify(geometry, 0.001)), 9)) AS cell,
+          size(h3_polyfillash3string(ST_AsWKT(ST_Simplify(geometry, 0.001)), 9))     AS num_cells
+  FROM    municipios_geo
+)
+GROUP BY h3_toparent(cell, 6)
 ```
 
-### The grid, over Iberia
+## What's next — Phase B
 
-::: {style="background:#19150f; padding:28px; border-radius:6px; max-width:440px; margin:0 auto;"}
-![](../assets/spain-h3-map.svg)
-:::
-
-*Illustrative H3 coverage over the Iberian peninsula. The final population choropleth and the
-night-lights agreement map ship May 26.*
-
-## What ships May 26
-
-- The full notebook (population binning + raster zonal stats), reproducible on Databricks Free Edition.
-- Two maps: the H3 population surface, and where it agrees / disagrees with night-lights.
-- A written piece, plus an X thread walking through the result.
+The H3 map still assumes population is spread *evenly* within each municipality. It isn't.
+**Phase B** brings in NASA Black Marble (VIIRS) night-lights to reallocate population by how
+brightly each cell glows — turning "where the register says people are" into "where the lights
+prove they are." That's the validator, and the published thread, still to come.
