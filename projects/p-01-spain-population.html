@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prospectra">
-<meta name="dcterms.date" content="2026-05-26">
-<meta name="description" content="Binning Spain’s INE Padrón population into H3 res-9 cells and validating it against NASA Black Marble night-lights — the first project in Prospectra’s demographic trilogy.">
+<meta name="dcterms.date" content="2026-06-06">
+<meta name="description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
 
 <title>Where does Spain actually live? – Prospectra</title>
 <style>
@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7275f723373af607bff4bc993d95eb2f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-fa2fef29428e8889d5ad79df6cc0d786.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,11 +113,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Where does Spain actually live? – Prospectra">
-<meta property="og:description" content="Binning Spain’s INE Padrón population into H3 res-9 cells and validating it against NASA Black Marble night-lights — the first project in Prospectra’s demographic trilogy.">
+<meta property="og:description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
 <meta property="og:image" content="https://prospectra.earth/projects/assets/og-image.png">
 <meta property="og:site_name" content="Prospectra">
 <meta name="twitter:title" content="Where does Spain actually live? – Prospectra">
-<meta name="twitter:description" content="Binning Spain’s INE Padrón population into H3 res-9 cells and validating it against NASA Black Marble night-lights — the first project in Prospectra’s demographic trilogy.">
+<meta name="twitter:description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
 <meta name="twitter:image" content="https://prospectra.earth/projects/assets/og-image.png">
 <meta name="twitter:creator" content="@franjmartin21">
 <meta name="twitter:card" content="summary_large_image">
@@ -177,14 +177,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
-  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The data</a></li>
-  <li><a href="#approach" id="toc-approach" class="nav-link" data-scroll-target="#approach">Approach</a>
+  <li><a href="#the-finding" id="toc-the-finding" class="nav-link" data-scroll-target="#the-finding">The finding</a></li>
+  <li><a href="#four-views-of-the-same-47.5-million-people" id="toc-four-views-of-the-same-47.5-million-people" class="nav-link" data-scroll-target="#four-views-of-the-same-47.5-million-people">Four views of the same 47.5 million people</a>
   <ul class="collapse">
-  <li><a href="#binning-population-to-h3" id="toc-binning-population-to-h3" class="nav-link" data-scroll-target="#binning-population-to-h3">1 · Binning population to H3</a></li>
-  <li><a href="#cross-checking-against-night-lights" id="toc-cross-checking-against-night-lights" class="nav-link" data-scroll-target="#cross-checking-against-night-lights">2 · Cross-checking against night-lights</a></li>
-  <li><a href="#the-grid-over-iberia" id="toc-the-grid-over-iberia" class="nav-link" data-scroll-target="#the-grid-over-iberia">The grid, over Iberia</a></li>
+  <li><a href="#by-municipality-8100-units" id="toc-by-municipality-8100-units" class="nav-link" data-scroll-target="#by-municipality-8100-units">By municipality (~8,100 units)</a></li>
+  <li><a href="#by-province-50-units" id="toc-by-province-50-units" class="nav-link" data-scroll-target="#by-province-50-units">By province (50 units)</a></li>
+  <li><a href="#by-autonomous-community-17-units" id="toc-by-autonomous-community-17-units" class="nav-link" data-scroll-target="#by-autonomous-community-17-units">By autonomous community (17 units)</a></li>
+  <li><a href="#on-a-uniform-h3-grid-equal-area-hexagons" id="toc-on-a-uniform-h3-grid-equal-area-hexagons" class="nav-link" data-scroll-target="#on-a-uniform-h3-grid-equal-area-hexagons">On a uniform H3 grid (equal-area hexagons)</a></li>
   </ul></li>
-  <li><a href="#what-ships-may-26" id="toc-what-ships-may-26" class="nav-link" data-scroll-target="#what-ships-may-26">What ships May 26</a></li>
+  <li><a href="#how-its-built" id="toc-how-its-built" class="nav-link" data-scroll-target="#how-its-built">How it’s built</a></li>
+  <li><a href="#whats-next-phase-b" id="toc-whats-next-phase-b" class="nav-link" data-scroll-target="#whats-next-phase-b">What’s next — Phase B</a></li>
   </ul>
 </nav>
     </div>
@@ -194,18 +196,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Where does Spain actually live?</h1>
-<p class="subtitle lead">Population density per H3 cell, cross-checked against night-lights.</p>
+<p class="subtitle lead">Population density across Spain — by municipality, province, autonomous community, and a uniform H3 grid.</p>
   <div class="quarto-categories">
     <div class="quarto-category">H3</div>
     <div class="quarto-category">INE</div>
-    <div class="quarto-category">raster</div>
     <div class="quarto-category">Spain</div>
+    <div class="quarto-category">density</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Binning Spain’s INE Padrón population into H3 res-9 cells and validating it against NASA Black Marble night-lights — the first project in Prospectra’s demographic trilogy.
+    Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.
   </div>
 </div>
 
@@ -222,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 26, 2026</p>
+      <p class="date">June 6, 2026</p>
     </div>
   </div>
   
@@ -240,101 +242,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>In progress — ships May 26, 2026
+<span class="screen-reader-only">Note</span>Phase A — administrative + H3 view
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is the build page for <strong>P-01</strong>, the first project in Prospectra’s demographic trilogy. It’s published as the work happens. The code and figure below show the <em>approach</em>; the finished analysis and charts land on May 26.</p>
+<p>This is the first of two phases. <strong>Phase A</strong> (here) answers <em>where people live</em> from the census and the map. <strong>Phase B</strong> adds NASA Black Marble night-lights to validate <em>where inside each municipality</em> they actually live. Built and run on Databricks Free Edition serverless.</p>
 </div>
 </div>
 <section id="the-question" class="level2">
 <h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>Spain’s population register, the <a href="https://ine.es">INE Padrón Continuo</a>, is published per <em>municipality</em> — and municipalities are wildly uneven in size. Madrid is one polygon; so is a 12-person hamlet in Soria. Ask “where do people actually live?” with that data and the map lies: it tells you about administrative borders, not density.</p>
-<p>The fix is to throw away the borders and bin everyone into a regular grid — <a href="https://h3geo.org">Uber’s <strong>H3</strong> hexagons</a> — then sanity-check the result against an independent signal: how brightly each cell glows at night.</p>
+<p>Spain’s population register, the <a href="https://ine.es">INE Padrón Continuo</a>, is published per <em>municipality</em> — and municipalities are wildly uneven in size. Madrid is one polygon; so is a 12-person hamlet in Soria. Ask “where do people actually live?” with raw municipal data and the map lies: it tells you about administrative borders, not about people.</p>
 </section>
-<section id="the-data" class="level2">
-<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<section id="the-finding" class="level2">
+<h2 class="anchored" data-anchor-id="the-finding">The finding</h2>
+<p>The lie is measurable. Take every Spanish municipality’s population density (people per km², computed on an equal-area projection) for 2022:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Layer</th>
-<th>Source</th>
-<th>Resolution</th>
+<th>Measure</th>
+<th>people / km²</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Population</td>
-<td>INE Padrón Continuo</td>
-<td>Municipal polygon</td>
+<td>Median municipality</td>
+<td><strong>13</strong></td>
 </tr>
 <tr class="even">
-<td>Spatial index</td>
-<td>Uber H3</td>
-<td>res-9 (~0.1 km²)</td>
+<td>Mean municipality</td>
+<td>180</td>
 </tr>
 <tr class="odd">
-<td>Validation</td>
-<td>NASA Black Marble (VIIRS)</td>
-<td>~500 m raster</td>
+<td><strong>The average <em>person’s</em> density</strong> (population-weighted)</td>
+<td><strong>2,508</strong></td>
 </tr>
 </tbody>
 </table>
+<p>Half of Spain’s municipalities sit below <strong>13 people/km²</strong> — the empty interior, <em>la España vaciada</em>. Yet the typical Spaniard lives at roughly <strong>2,500 people/km²</strong>. That’s a <strong>14×</strong> gap between the average <em>place</em> and the average <em>person</em>. A map coloured by municipality shows you empty land; it does not show you where the country lives.</p>
 </section>
-<section id="approach" class="level2">
-<h2 class="anchored" data-anchor-id="approach">Approach</h2>
-<ol type="1">
-<li><strong>Bin</strong> municipal population into H3 res-9 cells (area-weighted).</li>
-<li><strong>Aggregate</strong> night-time radiance per cell from the Black Marble raster.</li>
-<li><strong>Compare</strong> the two surfaces — where they disagree is where the register and reality part ways.</li>
-</ol>
-<section id="binning-population-to-h3" class="level3">
-<h3 class="anchored" data-anchor-id="binning-population-to-h3">1 · Binning population to H3</h3>
-<p>On Databricks, with Apache Sedona for the spatial join and the built-in <code>h3_*</code> SQL functions for indexing — no GIS server, just the lakehouse:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Databricks · PySpark + Apache Sedona</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sedona.spark <span class="im">import</span> SedonaContext</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sedona <span class="op">=</span> SedonaContext.create(spark)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># municipal polygons (INE) → H3 res-9 cells covering each one</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>cells <span class="op">=</span> (</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    spark.table(<span class="st">"ine.padron_municipal"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         .selectExpr(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"muni_code"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"poblacion"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">"explode(h3_polyfill(geom, 9)) AS h3"</span>)        <span class="co"># one row per covered cell</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># split each municipality's population across its cells, weighted by area</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>pop_per_cell <span class="op">=</span> (</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    cells.withColumn(<span class="st">"cell_pop"</span>, col(<span class="st">"poblacion"</span>) <span class="op">*</span> col(<span class="st">"area_share"</span>))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>         .groupBy(<span class="st">"h3"</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>         .agg(<span class="bu">sum</span>(<span class="st">"cell_pop"</span>).alias(<span class="st">"population"</span>))</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="cross-checking-against-night-lights" class="level3">
-<h3 class="anchored" data-anchor-id="cross-checking-against-night-lights">2 · Cross-checking against night-lights</h3>
-<p>Zonal statistics straight in Databricks SQL — average VIIRS radiance per H3 cell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  h3_cell,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AVG</span>(radiance) <span class="kw">AS</span> mean_radiance</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span>    black_marble.viirs_2024</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> h3_cell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="the-grid-over-iberia" class="level3">
-<h3 class="anchored" data-anchor-id="the-grid-over-iberia">The grid, over Iberia</h3>
-<div style="background:#19150f; padding:28px; border-radius:6px; max-width:440px; margin:0 auto;">
-<p><img src="../assets/spain-h3-map.svg" class="img-fluid"></p>
+<section id="four-views-of-the-same-47.5-million-people" class="level2">
+<h2 class="anchored" data-anchor-id="four-views-of-the-same-47.5-million-people">Four views of the same 47.5 million people</h2>
+<p>The same population, drawn at four different units. Watch how the story sharpens as the spatial unit gets more honest.</p>
+<section id="by-municipality-8100-units" class="level3">
+<h3 class="anchored" data-anchor-id="by-municipality-8100-units">By municipality (~8,100 units)</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/p01/municipal_density_2022.png" class="img-fluid figure-img"></p>
+<figcaption>Population density by municipality, 2022</figcaption>
+</figure>
 </div>
-<p><em>Illustrative H3 coverage over the Iberian peninsula. The final population choropleth and the night-lights agreement map ship May 26.</em></p>
+</section>
+<section id="by-province-50-units" class="level3">
+<h3 class="anchored" data-anchor-id="by-province-50-units">By province (50 units)</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/p01/provincial_density_2022.png" class="img-fluid figure-img"></p>
+<figcaption>Population density by province, 2022</figcaption>
+</figure>
+</div>
+</section>
+<section id="by-autonomous-community-17-units" class="level3">
+<h3 class="anchored" data-anchor-id="by-autonomous-community-17-units">By autonomous community (17 units)</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/p01/ccaa_density_2022.png" class="img-fluid figure-img"></p>
+<figcaption>Population density by autonomous community, 2022</figcaption>
+</figure>
+</div>
+</section>
+<section id="on-a-uniform-h3-grid-equal-area-hexagons" class="level3">
+<h3 class="anchored" data-anchor-id="on-a-uniform-h3-grid-equal-area-hexagons">On a uniform H3 grid (equal-area hexagons)</h3>
+<p>The administrative units all share one flaw: they vary in size and shape, so colour partly encodes <em>geography</em> rather than <em>density</em>. Uber <a href="https://h3geo.org">H3</a> replaces them with equal-area hexagons, so colour means one thing everywhere — and the population map and the density map become the same map.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/p01/h3_density_res6_2022.png" class="img-fluid figure-img"></p>
+<figcaption>Population density on an H3 grid (res-6), 2022</figcaption>
+</figure>
+</div>
 </section>
 </section>
-<section id="what-ships-may-26" class="level2">
-<h2 class="anchored" data-anchor-id="what-ships-may-26">What ships May 26</h2>
-<ul>
-<li>The full notebook (population binning + raster zonal stats), reproducible on Databricks Free Edition.</li>
-<li>Two maps: the H3 population surface, and where it agrees / disagrees with night-lights.</li>
-<li>A written piece, plus an X thread walking through the result.</li>
-</ul>
+<section id="how-its-built" class="level2">
+<h2 class="anchored" data-anchor-id="how-its-built">How it’s built</h2>
+<p>A lakehouse pipeline — no GIS server, just Databricks SQL + the native spatial functions:</p>
+<ol type="1">
+<li><strong>Join</strong> INE Padrón population to IGN municipal boundaries on the 5-digit INE code (8,131 municipalities matched cleanly; the boundary set’s extras are non-municipal territorial entities and disputed enclaves, reconciled to the unit).</li>
+<li><strong>Density</strong>, honestly — reproject to the ETRS89 / LAEA equal-area CRS (EPSG:3035) and divide population by real km². Density is non-additive, so it’s recomputed (not averaged) at each level when dissolving up to province and CCAA.</li>
+<li><strong>H3 allocation</strong> — polyfill each municipality to res-9 cells and distribute its population across them, then roll up to res-6 for the national view. Population conserves to 99.998%.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Allocate municipal population to H3 cells (native Databricks h3_*),</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- simplifying geometry first so the polyfill stays cheap on detailed boundaries.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  h3_toparent(cell, <span class="dv">6</span>)                         <span class="kw">AS</span> h3_cell,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(poblacion <span class="op">/</span> num_cells)                   <span class="kw">AS</span> poblacion</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span>  codigo_municipio, poblacion,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>          explode(h3_polyfillash3string(ST_AsWKT(ST_Simplify(geometry, <span class="fl">0.001</span>)), <span class="dv">9</span>)) <span class="kw">AS</span> cell,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">size</span>(h3_polyfillash3string(ST_AsWKT(ST_Simplify(geometry, <span class="fl">0.001</span>)), <span class="dv">9</span>))     <span class="kw">AS</span> num_cells</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span>    municipios_geo</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> h3_toparent(cell, <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="whats-next-phase-b" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next-phase-b">What’s next — Phase B</h2>
+<p>The H3 map still assumes population is spread <em>evenly</em> within each municipality. It isn’t. <strong>Phase B</strong> brings in NASA Black Marble (VIIRS) night-lights to reallocate population by how brightly each cell glows — turning “where the register says people are” into “where the lights prove they are.” That’s the validator, and the published thread, still to come.</p>
 
 
 </section>
