@@ -1,81 +1,85 @@
 ---
-title: "Where does Spain actually live?"
-subtitle: "Population density across Spain — by municipality, province, autonomous community, and a uniform H3 grid."
-description: "Phase A of Prospectra's demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie."
+title: "¿Dónde vive realmente España?"
+subtitle: "Densidad de población en España — por municipio, provincia, comunidad autónoma y una rejilla H3 uniforme."
+description: "Fase A de la trilogía demográfica de Prospectra: unir la población del Padrón del INE con los límites del IGN, calcular una densidad honesta de igual área y repartir a toda la población en celdas H3 de Uber para escapar de la mentira del coropleta."
 date: 2026-06-06
 author: "Prospectra"
-categories: [H3, INE, Spain, density]
+categories: [H3, INE, España, densidad]
 toc: true
 ---
 
 ::: {.callout-note}
-## Phase A — administrative + H3 view
-This is the first of two phases. **Phase A** (here) answers *where people live* from the census
-and the map. **Phase B** adds NASA Black Marble night-lights to validate *where inside each
-municipality* they actually live. Built and run on Databricks Free Edition serverless.
+## Fase A — vista administrativa + H3
+Esta es la primera de dos fases. La **Fase A** (aquí) responde *dónde vive la gente* a partir del
+censo y el mapa. La **Fase B** añade las luces nocturnas de NASA Black Marble para validar *dónde,
+dentro de cada municipio*, vive realmente. Construido y ejecutado sobre Databricks Free Edition
+serverless.
 :::
 
-## The question
+## La pregunta
 
-Spain's population register, the [INE Padrón Continuo](https://ine.es), is published per
-*municipality* — and municipalities are wildly uneven in size. Madrid is one polygon; so is a
-12-person hamlet in Soria. Ask "where do people actually live?" with raw municipal data and the
-map lies: it tells you about administrative borders, not about people.
+El registro de población de España, el [Padrón Continuo del INE](https://ine.es), se publica por
+*municipio* — y los municipios son enormemente desiguales en tamaño. Madrid es un polígono; también
+lo es una aldea de 12 personas en Soria. Pregunta "¿dónde vive realmente la gente?" con datos
+municipales en bruto y el mapa miente: te habla de fronteras administrativas, no de personas.
 
-## The finding
+## El hallazgo
 
-The lie is measurable. Take every Spanish municipality's population density (people per km²,
-computed on an equal-area projection) for 2022:
+La mentira es medible. Toma la densidad de población (habitantes por km², calculada sobre una
+proyección de igual área) de cada municipio español en 2022:
 
-| Measure | people / km² |
+| Medida | hab. / km² |
 |---|---|
-| Median municipality | **13** |
-| Mean municipality | 180 |
-| **The average *person's* density** (population-weighted) | **2,508** |
+| Municipio mediano | **13** |
+| Municipio medio | 180 |
+| **La densidad del *español medio*** (ponderada por población) | **2.508** |
 
-Half of Spain's municipalities sit below **13 people/km²** — the empty interior, *la España
-vaciada*. Yet the typical Spaniard lives at roughly **2,500 people/km²**. That's a **14×** gap
-between the average *place* and the average *person*. A map coloured by municipality shows you
-empty land; it does not show you where the country lives.
+La mitad de los municipios de España están por debajo de **13 hab./km²** — el interior vacío, *la
+España vaciada*. Y sin embargo el español típico vive a unos **2.500 hab./km²**. La persona típica
+vive, por tanto, en un entorno unas **187×** más denso que el municipio típico (la mediana) — y unas
+**14×** más denso que el municipio *medio* (180). Un mapa coloreado por municipio te enseña tierra
+vacía; no te enseña dónde vive el país.
 
-## Four views of the same 47.5 million people
+## Cuatro vistas de los mismos 47,5 millones de personas
 
-The same population, drawn at four different units. Watch how the story sharpens as the spatial
-unit gets more honest.
+La misma población, dibujada en cuatro unidades distintas. Observa cómo se afina la historia a
+medida que la unidad espacial se vuelve más honesta.
 
-### By municipality (~8,100 units)
-![Population density by municipality, 2022](../assets/p01/municipal_density_2022.png)
+### Por municipio (~8.100 unidades)
+![Densidad de población por municipio, 2022](../assets/p01/municipal_density_2022.png)
 
-### By province (50 units)
-![Population density by province, 2022](../assets/p01/provincial_density_2022.png)
+### Por provincia (50 unidades)
+![Densidad de población por provincia, 2022](../assets/p01/provincial_density_2022.png)
 
-### By autonomous community (17 units)
-![Population density by autonomous community, 2022](../assets/p01/ccaa_density_2022.png)
+### Por comunidad autónoma (17 unidades)
+![Densidad de población por comunidad autónoma, 2022](../assets/p01/ccaa_density_2022.png)
 
-### On a uniform H3 grid (equal-area hexagons)
-The administrative units all share one flaw: they vary in size and shape, so colour partly
-encodes *geography* rather than *density*. Uber [H3](https://h3geo.org) replaces them with
-equal-area hexagons, so colour means one thing everywhere — and the population map and the
-density map become the same map.
+### Sobre una rejilla H3 uniforme (hexágonos de igual área)
+Las unidades administrativas comparten un defecto: varían en tamaño y forma, así que el color
+codifica en parte la *geografía* en lugar de la *densidad*. Uber [H3](https://h3geo.org) las
+reemplaza por hexágonos de igual área, de modo que el color significa lo mismo en todo el territorio
+— y el mapa de población y el de densidad pasan a ser el mismo mapa.
 
-![Population density on an H3 grid (res-6), 2022](../assets/p01/h3_density_res6_2022.png)
+![Densidad de población sobre rejilla H3 (res-6), 2022](../assets/p01/h3_density_res6_2022.png)
 
-## How it's built
+## Cómo está construido
 
-A lakehouse pipeline — no GIS server, just Databricks SQL + the native spatial functions:
+Un pipeline sobre Databricks — sin servidor GIS, solo Databricks SQL + las funciones espaciales nativas:
 
-1. **Join** INE Padrón population to IGN municipal boundaries on the 5-digit INE code
-   (8,131 municipalities matched cleanly; the boundary set's extras are non-municipal
-   territorial entities and disputed enclaves, reconciled to the unit).
-2. **Density**, honestly — reproject to the ETRS89 / LAEA equal-area CRS (EPSG:3035) and divide
-   population by real km². Density is non-additive, so it's recomputed (not averaged) at each
-   level when dissolving up to province and CCAA.
-3. **H3 allocation** — polyfill each municipality to res-9 cells and distribute its population
-   across them, then roll up to res-6 for the national view. Population conserves to 99.998%.
+1. **Unir** la población del Padrón del INE a los límites municipales del IGN por el código INE de
+   5 dígitos (8.131 municipios cruzados limpiamente; los extras del conjunto de límites son
+   entidades territoriales no municipales y enclaves en disputa, reconciliados a la unidad).
+2. **Densidad**, con honestidad — reproyectar al CRS de igual área ETRS89 / LAEA (EPSG:3035) y
+   dividir población entre km² reales. La densidad no es aditiva, así que se recalcula (no se
+   promedia) en cada nivel al disolver hacia provincia y CCAA.
+3. **Asignación H3** — rellenar (*polyfill*) cada municipio a celdas res-9 y repartir su población
+   entre ellas, luego agregar a res-6 para la vista nacional. La población se conserva de forma
+   exacta: los 3 municipios que el *polyfill* deja sin celda se rescatan asignándolos a la celda H3
+   de su centroide, de modo que no se pierde ni una persona.
 
 ```sql
--- Allocate municipal population to H3 cells (native Databricks h3_*),
--- simplifying geometry first so the polyfill stays cheap on detailed boundaries.
+-- Asignar la población municipal a celdas H3 (h3_* nativo de Databricks),
+-- simplificando la geometría primero para que el polyfill sea barato sobre fronteras detalladas.
 SELECT  h3_toparent(cell, 6)                         AS h3_cell,
         SUM(poblacion / num_cells)                   AS poblacion
 FROM (
@@ -87,9 +91,10 @@ FROM (
 GROUP BY h3_toparent(cell, 6)
 ```
 
-## What's next — Phase B
+## Qué viene — Fase B
 
-The H3 map still assumes population is spread *evenly* within each municipality. It isn't.
-**Phase B** brings in NASA Black Marble (VIIRS) night-lights to reallocate population by how
-brightly each cell glows — turning "where the register says people are" into "where the lights
-prove they are." That's the validator, and the published thread, still to come.
+El mapa H3 todavía asume que la población se reparte *de forma uniforme* dentro de cada municipio.
+No es así. La **Fase B** incorpora las luces nocturnas de NASA Black Marble (VIIRS) para reasignar
+la población según el brillo de cada celda — convirtiendo "donde el registro dice que está la gente"
+en "donde las luces demuestran que está". Ese es el validador, y el hilo publicado, todavía por
+llegar.

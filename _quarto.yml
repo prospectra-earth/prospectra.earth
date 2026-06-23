@@ -7,9 +7,11 @@ project:
     - CNAME        # custom-domain marker for GitHub Pages; must land in _site every build
     - assets/og-image.png   # social-share image referenced by open-graph/twitter-card meta
 
+lang: es
+
 website:
   title: "Prospectra"
-  description: "Geospatial analytics, indexed to the cell."
+  description: "Analítica geoespacial sobre Databricks — datos abiertos de España convertidos en productos de datos."
   site-url: https://prospectra.earth
   favicon: assets/brand/favicon.ico
   open-graph:
@@ -23,15 +25,15 @@ website:
     logo: assets/brand/prospectra-mark.svg
     left:
       - href: index.qmd
-        text: Home
+        text: Inicio
       - href: index.qmd#projects
-        text: Projects
+        text: Proyectos
       - href: index.qmd#writing
-        text: Writing
+        text: Notas
       - href: index.qmd#about
-        text: About
+        text: Quiénes somos
   page-footer:
-    left: "© 2026 Prospectra · Geospatial analytics, indexed to the cell."
+    left: "© 2026 Prospectra · Analítica geoespacial sobre Databricks."
     right:
       - icon: github
         href: https://github.com/ceo-prospectra/prospectra.earth
@@ -42,6 +44,7 @@ format:
   html:
     theme:
       light: [cosmo, custom.scss]
+      dark: [cosmo, custom-dark.scss]
     css: styles.css
     toc: true
     fontsize: 17px
