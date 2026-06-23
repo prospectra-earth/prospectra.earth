@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.38">
@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prospectra">
-<meta name="dcterms.date" content="2026-06-06">
-<meta name="description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
+<meta name="description" content="Fase A de la trilogía demográfica de Prospectra: unir la población del Padrón del INE con los límites del IGN, calcular una densidad honesta de igual área y repartir a toda la población en celdas H3 de Uber para escapar de la mentira del coropleta.">
 
-<title>Where does Spain actually live? – Prospectra</title>
+<title>¿Dónde vive realmente España? – Prospectra</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -78,10 +77,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fa2fef29428e8889d5ad79df6cc0d786.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d2ae159aae4bfad4d6486bda9e055dc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-f1c793a7fdcd5913fe0e947dd809d4a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-d2ae159aae4bfad4d6486bda9e055dc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,34 +99,196 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Where does Spain actually live? – Prospectra">
-<meta property="og:description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
+<meta property="og:title" content="¿Dónde vive realmente España? – Prospectra">
+<meta property="og:description" content="Fase A de la trilogía demográfica de Prospectra: unir la población del Padrón del INE con los límites del IGN, calcular una densidad honesta de igual área y repartir a toda la población en celdas H3 de Uber para escapar de la mentira del coropleta.">
 <meta property="og:image" content="https://prospectra.earth/projects/assets/og-image.png">
 <meta property="og:site_name" content="Prospectra">
-<meta name="twitter:title" content="Where does Spain actually live? – Prospectra">
-<meta name="twitter:description" content="Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.">
+<meta name="twitter:title" content="¿Dónde vive realmente España? – Prospectra">
+<meta name="twitter:description" content="Fase A de la trilogía demográfica de Prospectra: unir la población del Padrón del INE con los límites del IGN, calcular una densidad honesta de igual área y repartir a toda la población en celdas H3 de Uber para escapar de la mentira del coropleta.">
 <meta name="twitter:image" content="https://prospectra.earth/projects/assets/og-image.png">
 <meta name="twitter:creator" content="@franjmartin21">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,31 +303,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Prospectra</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html#projects"> 
-<span class="menu-text">Projects</span></a>
+<span class="menu-text">Proyectos</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html#writing"> 
-<span class="menu-text">Writing</span></a>
+<span class="menu-text">Notas</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html#about"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Quiénes somos</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -173,41 +339,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
-  <li><a href="#the-finding" id="toc-the-finding" class="nav-link" data-scroll-target="#the-finding">The finding</a></li>
-  <li><a href="#four-views-of-the-same-47.5-million-people" id="toc-four-views-of-the-same-47.5-million-people" class="nav-link" data-scroll-target="#four-views-of-the-same-47.5-million-people">Four views of the same 47.5 million people</a>
+  <li><a href="#la-pregunta" id="toc-la-pregunta" class="nav-link active" data-scroll-target="#la-pregunta">La pregunta</a></li>
+  <li><a href="#el-hallazgo" id="toc-el-hallazgo" class="nav-link" data-scroll-target="#el-hallazgo">El hallazgo</a></li>
+  <li><a href="#cuatro-vistas-de-los-mismos-475-millones-de-personas" id="toc-cuatro-vistas-de-los-mismos-475-millones-de-personas" class="nav-link" data-scroll-target="#cuatro-vistas-de-los-mismos-475-millones-de-personas">Cuatro vistas de los mismos 47,5 millones de personas</a>
   <ul class="collapse">
-  <li><a href="#by-municipality-8100-units" id="toc-by-municipality-8100-units" class="nav-link" data-scroll-target="#by-municipality-8100-units">By municipality (~8,100 units)</a></li>
-  <li><a href="#by-province-50-units" id="toc-by-province-50-units" class="nav-link" data-scroll-target="#by-province-50-units">By province (50 units)</a></li>
-  <li><a href="#by-autonomous-community-17-units" id="toc-by-autonomous-community-17-units" class="nav-link" data-scroll-target="#by-autonomous-community-17-units">By autonomous community (17 units)</a></li>
-  <li><a href="#on-a-uniform-h3-grid-equal-area-hexagons" id="toc-on-a-uniform-h3-grid-equal-area-hexagons" class="nav-link" data-scroll-target="#on-a-uniform-h3-grid-equal-area-hexagons">On a uniform H3 grid (equal-area hexagons)</a></li>
+  <li><a href="#por-municipio-8.100-unidades" id="toc-por-municipio-8.100-unidades" class="nav-link" data-scroll-target="#por-municipio-8.100-unidades">Por municipio (~8.100 unidades)</a></li>
+  <li><a href="#por-provincia-50-unidades" id="toc-por-provincia-50-unidades" class="nav-link" data-scroll-target="#por-provincia-50-unidades">Por provincia (50 unidades)</a></li>
+  <li><a href="#por-comunidad-autónoma-17-unidades" id="toc-por-comunidad-autónoma-17-unidades" class="nav-link" data-scroll-target="#por-comunidad-autónoma-17-unidades">Por comunidad autónoma (17 unidades)</a></li>
+  <li><a href="#sobre-una-rejilla-h3-uniforme-hexágonos-de-igual-área" id="toc-sobre-una-rejilla-h3-uniforme-hexágonos-de-igual-área" class="nav-link" data-scroll-target="#sobre-una-rejilla-h3-uniforme-hexágonos-de-igual-área">Sobre una rejilla H3 uniforme (hexágonos de igual área)</a></li>
   </ul></li>
-  <li><a href="#how-its-built" id="toc-how-its-built" class="nav-link" data-scroll-target="#how-its-built">How it’s built</a></li>
-  <li><a href="#whats-next-phase-b" id="toc-whats-next-phase-b" class="nav-link" data-scroll-target="#whats-next-phase-b">What’s next — Phase B</a></li>
+  <li><a href="#cómo-está-construido" id="toc-cómo-está-construido" class="nav-link" data-scroll-target="#cómo-está-construido">Cómo está construido</a></li>
+  <li><a href="#qué-viene-fase-b" id="toc-qué-viene-fase-b" class="nav-link" data-scroll-target="#qué-viene-fase-b">Qué viene — Fase B</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Where does Spain actually live?</h1>
-<p class="subtitle lead">Population density across Spain — by municipality, province, autonomous community, and a uniform H3 grid.</p>
+<h1 class="title">¿Dónde vive realmente España?</h1>
+<p class="subtitle lead">Densidad de población en España — por municipio, provincia, comunidad autónoma y una rejilla H3 uniforme.</p>
   <div class="quarto-categories">
     <div class="quarto-category">H3</div>
     <div class="quarto-category">INE</div>
-    <div class="quarto-category">Spain</div>
-    <div class="quarto-category">density</div>
+    <div class="quarto-category">España</div>
+    <div class="quarto-category">densidad</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Phase A of Prospectra’s demographic trilogy: joining INE Padrón population to IGN boundaries, computing honest equal-area density, and binning everyone into Uber H3 cells to escape the choropleth lie.
+    Fase A de la trilogía demográfica de Prospectra: unir la población del Padrón del INE con los límites del IGN, calcular una densidad honesta de igual área y repartir a toda la población en celdas H3 de Uber para escapar de la mentira del coropleta.
   </div>
 </div>
 
@@ -215,16 +382,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
     <div class="quarto-title-meta-contents">
              <p>Prospectra </p>
           </div>
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 6, 2026</p>
+      <p class="date">6 de junio de 2026</p>
     </div>
   </div>
   
@@ -242,95 +409,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Phase A — administrative + H3 view
+<span class="screen-reader-only">Nota</span>Fase A — vista administrativa + H3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is the first of two phases. <strong>Phase A</strong> (here) answers <em>where people live</em> from the census and the map. <strong>Phase B</strong> adds NASA Black Marble night-lights to validate <em>where inside each municipality</em> they actually live. Built and run on Databricks Free Edition serverless.</p>
+<p>Esta es la primera de dos fases. La <strong>Fase A</strong> (aquí) responde <em>dónde vive la gente</em> a partir del censo y el mapa. La <strong>Fase B</strong> añade las luces nocturnas de NASA Black Marble para validar <em>dónde, dentro de cada municipio</em>, vive realmente. Construido y ejecutado sobre Databricks Free Edition serverless.</p>
 </div>
 </div>
-<section id="the-question" class="level2">
-<h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>Spain’s population register, the <a href="https://ine.es">INE Padrón Continuo</a>, is published per <em>municipality</em> — and municipalities are wildly uneven in size. Madrid is one polygon; so is a 12-person hamlet in Soria. Ask “where do people actually live?” with raw municipal data and the map lies: it tells you about administrative borders, not about people.</p>
+<section id="la-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="la-pregunta">La pregunta</h2>
+<p>El registro de población de España, el <a href="https://ine.es">Padrón Continuo del INE</a>, se publica por <em>municipio</em> — y los municipios son enormemente desiguales en tamaño. Madrid es un polígono; también lo es una aldea de 12 personas en Soria. Pregunta “¿dónde vive realmente la gente?” con datos municipales en bruto y el mapa miente: te habla de fronteras administrativas, no de personas.</p>
 </section>
-<section id="the-finding" class="level2">
-<h2 class="anchored" data-anchor-id="the-finding">The finding</h2>
-<p>The lie is measurable. Take every Spanish municipality’s population density (people per km², computed on an equal-area projection) for 2022:</p>
+<section id="el-hallazgo" class="level2">
+<h2 class="anchored" data-anchor-id="el-hallazgo">El hallazgo</h2>
+<p>La mentira es medible. Toma la densidad de población (habitantes por km², calculada sobre una proyección de igual área) de cada municipio español en 2022:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Measure</th>
-<th>people / km²</th>
+<th>Medida</th>
+<th>hab. / km²</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Median municipality</td>
+<td>Municipio mediano</td>
 <td><strong>13</strong></td>
 </tr>
 <tr class="even">
-<td>Mean municipality</td>
+<td>Municipio medio</td>
 <td>180</td>
 </tr>
 <tr class="odd">
-<td><strong>The average <em>person’s</em> density</strong> (population-weighted)</td>
-<td><strong>2,508</strong></td>
+<td><strong>La densidad del <em>español medio</em></strong> (ponderada por población)</td>
+<td><strong>2.508</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Half of Spain’s municipalities sit below <strong>13 people/km²</strong> — the empty interior, <em>la España vaciada</em>. Yet the typical Spaniard lives at roughly <strong>2,500 people/km²</strong>. That’s a <strong>14×</strong> gap between the average <em>place</em> and the average <em>person</em>. A map coloured by municipality shows you empty land; it does not show you where the country lives.</p>
+<p>La mitad de los municipios de España están por debajo de <strong>13 hab./km²</strong> — el interior vacío, <em>la España vaciada</em>. Y sin embargo el español típico vive a unos <strong>2.500 hab./km²</strong>. La persona típica vive, por tanto, en un entorno unas <strong>187×</strong> más denso que el municipio típico (la mediana) — y unas <strong>14×</strong> más denso que el municipio <em>medio</em> (180). Un mapa coloreado por municipio te enseña tierra vacía; no te enseña dónde vive el país.</p>
 </section>
-<section id="four-views-of-the-same-47.5-million-people" class="level2">
-<h2 class="anchored" data-anchor-id="four-views-of-the-same-47.5-million-people">Four views of the same 47.5 million people</h2>
-<p>The same population, drawn at four different units. Watch how the story sharpens as the spatial unit gets more honest.</p>
-<section id="by-municipality-8100-units" class="level3">
-<h3 class="anchored" data-anchor-id="by-municipality-8100-units">By municipality (~8,100 units)</h3>
+<section id="cuatro-vistas-de-los-mismos-475-millones-de-personas" class="level2">
+<h2 class="anchored" data-anchor-id="cuatro-vistas-de-los-mismos-475-millones-de-personas">Cuatro vistas de los mismos 47,5 millones de personas</h2>
+<p>La misma población, dibujada en cuatro unidades distintas. Observa cómo se afina la historia a medida que la unidad espacial se vuelve más honesta.</p>
+<section id="por-municipio-8.100-unidades" class="level3">
+<h3 class="anchored" data-anchor-id="por-municipio-8.100-unidades">Por municipio (~8.100 unidades)</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/p01/municipal_density_2022.png" class="img-fluid figure-img"></p>
-<figcaption>Population density by municipality, 2022</figcaption>
+<figcaption>Densidad de población por municipio, 2022</figcaption>
 </figure>
 </div>
 </section>
-<section id="by-province-50-units" class="level3">
-<h3 class="anchored" data-anchor-id="by-province-50-units">By province (50 units)</h3>
+<section id="por-provincia-50-unidades" class="level3">
+<h3 class="anchored" data-anchor-id="por-provincia-50-unidades">Por provincia (50 unidades)</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/p01/provincial_density_2022.png" class="img-fluid figure-img"></p>
-<figcaption>Population density by province, 2022</figcaption>
+<figcaption>Densidad de población por provincia, 2022</figcaption>
 </figure>
 </div>
 </section>
-<section id="by-autonomous-community-17-units" class="level3">
-<h3 class="anchored" data-anchor-id="by-autonomous-community-17-units">By autonomous community (17 units)</h3>
+<section id="por-comunidad-autónoma-17-unidades" class="level3">
+<h3 class="anchored" data-anchor-id="por-comunidad-autónoma-17-unidades">Por comunidad autónoma (17 unidades)</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/p01/ccaa_density_2022.png" class="img-fluid figure-img"></p>
-<figcaption>Population density by autonomous community, 2022</figcaption>
+<figcaption>Densidad de población por comunidad autónoma, 2022</figcaption>
 </figure>
 </div>
 </section>
-<section id="on-a-uniform-h3-grid-equal-area-hexagons" class="level3">
-<h3 class="anchored" data-anchor-id="on-a-uniform-h3-grid-equal-area-hexagons">On a uniform H3 grid (equal-area hexagons)</h3>
-<p>The administrative units all share one flaw: they vary in size and shape, so colour partly encodes <em>geography</em> rather than <em>density</em>. Uber <a href="https://h3geo.org">H3</a> replaces them with equal-area hexagons, so colour means one thing everywhere — and the population map and the density map become the same map.</p>
+<section id="sobre-una-rejilla-h3-uniforme-hexágonos-de-igual-área" class="level3">
+<h3 class="anchored" data-anchor-id="sobre-una-rejilla-h3-uniforme-hexágonos-de-igual-área">Sobre una rejilla H3 uniforme (hexágonos de igual área)</h3>
+<p>Las unidades administrativas comparten un defecto: varían en tamaño y forma, así que el color codifica en parte la <em>geografía</em> en lugar de la <em>densidad</em>. Uber <a href="https://h3geo.org">H3</a> las reemplaza por hexágonos de igual área, de modo que el color significa lo mismo en todo el territorio — y el mapa de población y el de densidad pasan a ser el mismo mapa.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../assets/p01/h3_density_res6_2022.png" class="img-fluid figure-img"></p>
-<figcaption>Population density on an H3 grid (res-6), 2022</figcaption>
+<figcaption>Densidad de población sobre rejilla H3 (res-6), 2022</figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="how-its-built" class="level2">
-<h2 class="anchored" data-anchor-id="how-its-built">How it’s built</h2>
-<p>A lakehouse pipeline — no GIS server, just Databricks SQL + the native spatial functions:</p>
+<section id="cómo-está-construido" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-está-construido">Cómo está construido</h2>
+<p>Un pipeline sobre Databricks — sin servidor GIS, solo Databricks SQL + las funciones espaciales nativas:</p>
 <ol type="1">
-<li><strong>Join</strong> INE Padrón population to IGN municipal boundaries on the 5-digit INE code (8,131 municipalities matched cleanly; the boundary set’s extras are non-municipal territorial entities and disputed enclaves, reconciled to the unit).</li>
-<li><strong>Density</strong>, honestly — reproject to the ETRS89 / LAEA equal-area CRS (EPSG:3035) and divide population by real km². Density is non-additive, so it’s recomputed (not averaged) at each level when dissolving up to province and CCAA.</li>
-<li><strong>H3 allocation</strong> — polyfill each municipality to res-9 cells and distribute its population across them, then roll up to res-6 for the national view. Population conserves to 99.998%.</li>
+<li><strong>Unir</strong> la población del Padrón del INE a los límites municipales del IGN por el código INE de 5 dígitos (8.131 municipios cruzados limpiamente; los extras del conjunto de límites son entidades territoriales no municipales y enclaves en disputa, reconciliados a la unidad).</li>
+<li><strong>Densidad</strong>, con honestidad — reproyectar al CRS de igual área ETRS89 / LAEA (EPSG:3035) y dividir población entre km² reales. La densidad no es aditiva, así que se recalcula (no se promedia) en cada nivel al disolver hacia provincia y CCAA.</li>
+<li><strong>Asignación H3</strong> — rellenar (<em>polyfill</em>) cada municipio a celdas res-9 y repartir su población entre ellas, luego agregar a res-6 para la vista nacional. La población se conserva de forma exacta: los 3 municipios que el <em>polyfill</em> deja sin celda se rescatan asignándolos a la celda H3 de su centroide, de modo que no se pierde ni una persona.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Allocate municipal population to H3 cells (native Databricks h3_*),</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- simplifying geometry first so the polyfill stays cheap on detailed boundaries.</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Asignar la población municipal a celdas H3 (h3_* nativo de Databricks),</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- simplificando la geometría primero para que el polyfill sea barato sobre fronteras detalladas.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  h3_toparent(cell, <span class="dv">6</span>)                         <span class="kw">AS</span> h3_cell,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(poblacion <span class="op">/</span> num_cells)                   <span class="kw">AS</span> poblacion</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
@@ -339,11 +510,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">size</span>(h3_polyfillash3string(ST_AsWKT(ST_Simplify(geometry, <span class="fl">0.001</span>)), <span class="dv">9</span>))     <span class="kw">AS</span> num_cells</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span>    municipios_geo</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> h3_toparent(cell, <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> h3_toparent(cell, <span class="dv">6</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="whats-next-phase-b" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next-phase-b">What’s next — Phase B</h2>
-<p>The H3 map still assumes population is spread <em>evenly</em> within each municipality. It isn’t. <strong>Phase B</strong> brings in NASA Black Marble (VIIRS) night-lights to reallocate population by how brightly each cell glows — turning “where the register says people are” into “where the lights prove they are.” That’s the validator, and the published thread, still to come.</p>
+<section id="qué-viene-fase-b" class="level2">
+<h2 class="anchored" data-anchor-id="qué-viene-fase-b">Qué viene — Fase B</h2>
+<p>El mapa H3 todavía asume que la población se reparte <em>de forma uniforme</em> dentro de cada municipio. No es así. La <strong>Fase B</strong> incorpora las luces nocturnas de NASA Black Marble (VIIRS) para reasignar la población según el brillo de cada celda — convirtiendo “donde el registro dice que está la gente” en “donde las luces demuestran que está”. Ese es el validador, y el hilo publicado, todavía por llegar.</p>
 
 
 </section>
@@ -351,6 +522,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -374,12 +558,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "Copiado");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "Copiado");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
@@ -753,7 +937,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 Prospectra · Geospatial analytics, indexed to the cell.</p>
+<p>© 2026 Prospectra · Analítica geoespacial sobre Databricks.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

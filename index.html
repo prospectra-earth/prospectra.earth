@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A geospatial practice in the making, built in public over six months — Databricks-native pipelines on Spain’s open data.">
+<meta name="description" content="Consultora especializada en analítica geoespacial sobre Databricks. Convertimos los datos abiertos de España en productos de datos.">
 
 <title>Prospectra — Geospatial analytics, indexed to the cell. – Prospectra</title>
 <style>
@@ -41,10 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fa2fef29428e8889d5ad79df6cc0d786.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d2ae159aae4bfad4d6486bda9e055dc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-f1c793a7fdcd5913fe0e947dd809d4a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-d2ae159aae4bfad4d6486bda9e055dc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -59,17 +63,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
@@ -77,13 +81,13 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="index.css">
 <meta property="og:title" content="Prospectra — Geospatial analytics, indexed to the cell.">
-<meta property="og:description" content="A geospatial practice in the making, built in public over six months — Databricks-native pipelines on Spain’s open data.">
+<meta property="og:description" content="Consultora especializada en analítica geoespacial sobre Databricks. Convertimos los datos abiertos de España en productos de datos.">
 <meta property="og:image" content="https://prospectra.earth/assets/og-image.png">
 <meta property="og:site_name" content="Prospectra">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="Prospectra — Geospatial analytics, indexed to the cell.">
-<meta name="twitter:description" content="A geospatial practice in the making, built in public over six months — Databricks-native pipelines on Spain’s open data.">
+<meta name="twitter:description" content="Consultora especializada en analítica geoespacial sobre Databricks. Convertimos los datos abiertos de España en productos de datos.">
 <meta name="twitter:image" content="https://prospectra.earth/assets/og-image.png">
 <meta name="twitter:creator" content="@franjmartin21">
 <meta name="twitter:card" content="summary_large_image">
@@ -91,7 +95,169 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:image-width" content="1200">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,31 +272,32 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Prospectra</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#projects"> 
-<span class="menu-text">Projects</span></a>
+<span class="menu-text">Proyectos</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#writing"> 
-<span class="menu-text">Writing</span></a>
+<span class="menu-text">Notas</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#about"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Quiénes somos</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -146,6 +313,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="home">
 
 <!-- ========== HERO ========== -->
@@ -153,20 +321,22 @@ ul.task-list li input[type="checkbox"] {
   <div class="hex-bg" aria-hidden="true">
     <svg viewbox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveaspectratio="xMidYMid slice">
       <defs>
-        <pattern id="hexpat" width="60" height="52" patternunits="userSpaceOnUse">
-          <polygon points="15,0 45,0 60,26 45,52 15,52 0,26" fill="none" stroke="#19150f" stroke-width="0.8"></polygon>
+        <!-- Seamless single-stroke H3-style honeycomb (pointy-top, tessellating).
+             Shared edges overlap exactly, so the comb reads as one clean line. -->
+        <pattern id="hexpat" width="34.64" height="60" patternunits="userSpaceOnUse" patterntransform="scale(2.1)">
+          <polygon points="17.32,10 34.64,20 34.64,40 17.32,50 0,40 0,20"></polygon>
+          <polygon points="0,-20 17.32,-10 17.32,10 0,20 -17.32,10 -17.32,-10"></polygon>
+          <polygon points="34.64,-20 51.96,-10 51.96,10 34.64,20 17.32,10 17.32,-10"></polygon>
+          <polygon points="0,40 17.32,50 17.32,70 0,80 -17.32,70 -17.32,50"></polygon>
+          <polygon points="34.64,40 51.96,50 51.96,70 34.64,80 17.32,70 17.32,50"></polygon>
         </pattern>
       </defs>
       <rect width="100%" height="100%" fill="url(#hexpat)"></rect>
-      <polygon points="375,260 405,260 420,286 405,312 375,312 360,286" fill="#b8421a" class="hex-active"></polygon>
-      <polygon points="555,468 585,468 600,494 585,520 555,520 540,494" fill="#b8421a" opacity="0.6"></polygon>
-      <polygon points="975,156 1005,156 1020,182 1005,208 975,208 960,182" fill="#b8421a" opacity="0.4"></polygon>
-      <polygon points="855,624 885,624 900,650 885,676 855,676 840,650" fill="#19150f" opacity="0.5"></polygon>
     </svg>
   </div>
 
   <div class="hero-top">
-    <div class="eyebrow reveal d1">Geospatial Analytics · Building in Public</div>
+    <div class="eyebrow reveal d1">Analítica geoespacial · Databricks</div>
     <div class="coords reveal d1">
       <div>LAT <span>40°25′ N</span></div>
       <div>LON <span>3°42′ W</span></div>
@@ -181,7 +351,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 
   <div class="hero-sub">
-    <p class="reveal d3">A geospatial practice in the making — built in public over six months. The first project, mapping <em>where Spain actually lives</em>, ships May 26, 2026.</p>
+    <p class="reveal d3">Integramos analítica geoespacial sobre Databricks. Convertimos los datos abiertos de España — <em>población, territorio, riesgo</em> — en productos de datos.</p>
     <div class="pillpair reveal d4">
       <span class="pill">H3</span>
       <span class="pill">GeoParquet</span>
@@ -191,110 +361,107 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </section>
 
-<!-- ========== STATUS STRIP ========== -->
+<!-- ========== VALUE-PROP PILLARS ========== -->
 <div class="status-strip reveal d5">
-  <div class="stat"><span class="val">Week 5</span> of 26</div>
-  <div class="stat"><span class="val">Block 1</span> curriculum cleared</div>
-  <div class="stat"><span class="val">May 26</span> first project ships</div>
-  <div class="stat"><span class="val">5</span> Spain projects planned</div>
+  <div class="stat"><span class="val">Nativo</span> en Databricks</div>
+  <div class="stat"><span class="val">Geoespacial</span> de verdad</div>
+  <div class="stat"><span class="val">Foco</span> en España</div>
 </div>
 
 <!-- ========== MANIFESTO ========== -->
 <section class="manifesto">
-  <p>Every business problem has a location. <span class="strong">Most companies leave that signal on the floor.</span> We pick it up, give it an address, and put it to work.</p>
+  <p>Detrás de cada problema de negocio hay un «dónde». <span class="strong">Pocas empresas lo explotan.</span> Nosotros lo capturamos, lo indexamos y lo convertimos en valor.</p>
 </section>
 
-<!-- ========== FEATURED PROJECT (P-01) ========== -->
-<section class="feature">
-  <div class="case">
-    <div class="case-visual">
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
-      <div class="corner bl"></div>
-      <div class="corner br"></div>
-      <div class="meta">
-        <div>Project / <span>P-01</span></div>
-        <div>Resolution / <span>H3 r9</span></div>
-      </div>
-      <img class="map" src="assets/spain-h3-map.svg" alt="Stylized map of the Iberian peninsula with H3 hexagons">
+<!-- ========== CAPABILITIES — QUÉ CONSTRUIMOS ========== -->
+<section class="home-projects" id="capacidades">
+  <div class="section-label"><span>Qué construimos</span> — capacidades</div>
+  <p class="lead">Análisis geoespacial con toda la potencia de Databricks: dos especialidades que rara vez van juntas y que en Prospectra son una sola.</p>
+  <div class="proj-grid">
 
+    <div class="proj-tile">
+      <h3 class="proj-title anchored">Demografía y accesibilidad</h3>
+      <p class="proj-sub">Densidad de población, isócronas y cobertura de servicios sobre rejillas H3.</p>
+      <a class="proj-arrow" href="./projects/p-01-spain-population.html">ver P‑01 →</a>
     </div>
 
-    <div class="case-body">
-      <div class="case-tag">P-01 · Ships May 26</div>
-      <h2 class="anchored">Where does Spain <em>actually</em> live?</h2>
-      <p>The opening project bins Spain's population into H3 cells from the <em>INE Padrón</em>, then cross-checks the result against NASA's Black Marble night-lights — a test of where people really are, not just where the registry lists them.</p>
-      <p>It's the first chapter of a three-part series on Spain's demographic and housing story.</p>
-      <div class="case-sources">
-        <div><h4 class="anchored">Population</h4><div class="src">INE Padrón</div></div>
-        <div><h4 class="anchored">Index</h4><div class="src">H3 · r9</div></div>
-        <div><h4 class="anchored">Validation</h4><div class="src">Black Marble</div></div>
-      </div>
-      <p class="proj-more"><a href="./projects/p-01-spain-population.html">Read the build →</a></p>
+    <div class="proj-tile">
+      <h3 class="proj-title anchored">Selección de emplazamientos</h3>
+      <p class="proj-sub">Dónde abrir, expandir o consolidar: demanda, competencia y redes en el territorio.</p>
     </div>
+
+    <div class="proj-tile">
+      <h3 class="proj-title anchored">Modelos de riesgo</h3>
+      <p class="proj-sub">Incendio, inundación y exposición, combinando ráster y vector a escala.</p>
+    </div>
+
+    <div class="proj-tile">
+      <h3 class="proj-title anchored">Redes y rutas</h3>
+      <p class="proj-sub">Movilidad, logística y accesibilidad sobre grafos de carreteras.</p>
+    </div>
+
   </div>
 </section>
 
-<!-- ========== PROJECT PREVIEW TILES ========== -->
+<!-- ========== PORTFOLIO — PROYECTOS ========== -->
 <section class="home-projects" id="projects">
-  <div class="section-label"><span>Projects</span> — Spain's demographic trilogy</div>
+  <div class="section-label"><span>Proyectos</span> — demostraciones sobre datos abiertos de España</div>
   <div class="proj-grid">
 
     <a class="proj-tile" href="./projects/p-01-spain-population.html">
       <div class="proj-head">
         <span class="proj-code">P-01</span>
-        <span class="proj-status live">Ships May 26</span>
+        <span class="proj-status live">En vivo</span>
       </div>
-      <h3 class="proj-title anchored">Where does Spain actually live?</h3>
-      <p class="proj-sub">Population density per H3 cell, cross-validated against NASA Black Marble night-lights.</p>
-      <span class="proj-arrow">Read the build →</span>
+      <h3 class="proj-title anchored">¿Dónde vive realmente España?</h3>
+      <p class="proj-sub">Densidad de población por celda H3, a partir del Padrón del INE.</p>
+      <span class="proj-arrow">Ver el proyecto →</span>
     </a>
 
-    <a class="proj-tile" href="projects/p-02-migration.qmd">
+    <div class="proj-tile">
       <div class="proj-head">
         <span class="proj-code">P-02</span>
-        <span class="proj-status">Queued</span>
+        <span class="proj-status">Próximamente</span>
       </div>
-      <h3 class="proj-title anchored">The 2020–2024 reshuffling</h3>
-      <p class="proj-sub">Internal migration flows across Spain, traced year over year.</p>
-      <span class="proj-arrow">Coming soon →</span>
-    </a>
+      <h3 class="proj-title anchored">El reajuste 2020–2024</h3>
+      <p class="proj-sub">Flujos de migración interna en España, trazados año a año.</p>
+    </div>
 
-    <a class="proj-tile" href="projects/p-03-housing-pressure.qmd">
+    <div class="proj-tile">
       <div class="proj-head">
         <span class="proj-code">P-03</span>
-        <span class="proj-status">Queued</span>
+        <span class="proj-status">Próximamente</span>
       </div>
-      <h3 class="proj-title anchored">Where Spain grew but didn't build</h3>
-      <p class="proj-sub">Housing pressure where migration meets prices and the pace of construction.</p>
-      <span class="proj-arrow">Coming soon →</span>
-    </a>
+      <h3 class="proj-title anchored">Donde España creció pero no construyó</h3>
+      <p class="proj-sub">Presión sobre la vivienda: migración, precios y ritmo de construcción.</p>
+    </div>
 
   </div>
-  <p class="proj-more">See all five projects → <a href="projects/index.qmd">Projects</a></p>
+  <p class="proj-more">Una trilogía sobre la demografía y la vivienda en España — y más por venir.</p>
 </section>
 
-<!-- ========== WRITING ========== -->
+<!-- ========== WRITING — NOTAS ========== -->
 <section class="home-writing" id="writing">
-  <div class="section-label"><span>Writing</span> — notes from the build</div>
-  <p class="lead">Essays on the methods behind each project — the indexing schemes, the data sources, the trade-offs worth arguing about. The first pieces ship alongside P-01.</p>
+  <div class="section-label"><span>Notas</span> — el método</div>
+  <p class="lead">Cómo construimos cada proyecto: los esquemas de indexación, las fuentes de datos y las decisiones que importan. En inglés, también en Substack.</p>
   <div class="writing-list">
     <div class="writing-row">
       <span class="wt">H3 as integer hashing</span>
-      <span class="ws">Soon</span>
+      <span class="ws">Próximamente</span>
     </div>
     <div class="writing-row">
       <span class="wt">The H3 resolution trade-off</span>
-      <span class="ws">Soon</span>
+      <span class="ws">Próximamente</span>
     </div>
   </div>
 </section>
 
-<!-- ========== ABOUT ========== -->
+<!-- ========== ABOUT — QUIÉNES SOMOS ========== -->
 <section class="home-about" id="about">
-  <div class="section-label"><span>About</span> — what Prospectra is</div>
-  <p>Prospectra is a geospatial analytics practice, built in public. Spain has a gap: the traditional GIS shops don't run on the lakehouse, and the big Databricks consultancies don't do geospatial. Prospectra is being built to live in that intersection — <span class="about-accent">Databricks-native spatial pipelines on Spain's open data</span>.</p>
-  <p>Right now it's week 5 of a six-month sprint: twenty lessons, five portfolio projects, each shipping as a public article. Block 1 of the curriculum is cleared; the first project ships May 26. This site is the stage where the work goes public.</p>
+  <div class="section-label"><span>Quiénes somos</span> — la práctica</div>
+  <p>Prospectra es una consultora especializada en analítica geoespacial sobre Databricks. En España hay un hueco: el GIS tradicional no trabaja sobre Databricks y las consultoras de Databricks no hacen geoespacial. Prospectra está justo en ese cruce — <span class="about-accent">pipelines espaciales nativos de Databricks sobre los datos abiertos de España</span>.</p>
+  <p>Lo demostramos en abierto: cada proyecto del portafolio es un caso real construido sobre datos públicos, reproducible de principio a fin. Si tienes un problema con una dimensión geográfica, hablemos.</p>
+  <p class="proj-more"><a href="mailto:hello@prospectra.earth">Trabaja con nosotros →</a></p>
 </section>
 
 </div>
@@ -304,6 +471,19 @@ ul.task-list li input[type="checkbox"] {
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -327,12 +507,12 @@ ul.task-list li input[type="checkbox"] {
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
+      button.setAttribute("title", "Copiado");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
+        button.setAttribute("data-bs-title", "Copiado");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
@@ -706,7 +886,7 @@ ul.task-list li input[type="checkbox"] {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 Prospectra · Geospatial analytics, indexed to the cell.</p>
+<p>© 2026 Prospectra · Analítica geoespacial sobre Databricks.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
