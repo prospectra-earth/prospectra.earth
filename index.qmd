@@ -156,7 +156,7 @@ format:
 <section class="home-about" id="about">
   <div class="section-label"><span>Quiénes somos</span> — la práctica</div>
   <p>Prospectra es una consultora especializada en el procesamiento a gran escala de datos geoespaciales sobre Databricks. Diseñamos <span class="about-accent">pipelines espaciales nativos que convierten datos complejos en productos de datos</span>, pensados para el mercado español.</p>
-  <p>Lo demostramos en abierto: cada proyecto del portafolio es un caso real construido sobre datos públicos, reproducible de principio a fin. Si tienes un problema con una dimensión geográfica, hablemos.</p>
+  <p>Lo demostramos en abierto: cada proyecto del portafolio es un caso real construido sobre datos públicos, reproducible de principio a fin. Si estás desarrollando un proyecto con datos geoespaciales y necesitas ayuda, hablemos.</p>
 </section>
 
 </div>
