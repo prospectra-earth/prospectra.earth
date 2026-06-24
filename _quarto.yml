@@ -6,12 +6,13 @@ project:
   resources:
     - CNAME        # custom-domain marker for GitHub Pages; must land in _site every build
     - assets/og-image.png   # social-share image referenced by open-graph/twitter-card meta
+    - assets/brand/prospectra-mark-ondark.svg  # dark-navbar logo; referenced only in compiled CSS, so not auto-discovered
 
 lang: es
 
 website:
   title: "Prospectra"
-  description: "Analítica geoespacial sobre Databricks — datos abiertos de España convertidos en productos de datos."
+  description: "Consultora especializada en el procesamiento a gran escala de datos geoespaciales sobre Databricks."
   site-url: https://prospectra.earth
   favicon: assets/brand/favicon.ico
   open-graph:

@@ -19,6 +19,12 @@ body { font-feature-settings: "kern", "liga", "calt"; letter-spacing: -0.005em; 
 h1, h2, h3, h4 { font-family: "Fraunces", serif; letter-spacing: -0.02em; font-weight: 400; }
 h1 { font-weight: 300; }
 .navbar-brand img { height: 26px; }
+/* Brand mark on the dark navbar: the default mark strokes in dark ink and vanishes
+   on #1c1712 — swap to the cream-stroked transparent variant in dark mode. */
+[data-bs-theme="dark"] .navbar-brand img,
+body.quarto-dark .navbar-brand img {
+  content: url("/assets/brand/prospectra-mark-ondark.svg");
+}
 
 /* Editorial nav — mono lowercase wordmark + uppercase mono links */
 .navbar { border-bottom: 1px solid $border-color; }
